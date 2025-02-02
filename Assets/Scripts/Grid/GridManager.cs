@@ -9,8 +9,6 @@ public class GridManager : MonoBehaviour
     public float tileSize = 1.0f;
     public List<GameObject> tilePrefabs; // List of tile prefabs
     public Transform tilesParent;
-    public Color gridGizmoColor = new Color(0, 1, 0, 0.3f);
-
     private Dictionary<Vector2Int, GameObject> tiles = new Dictionary<Vector2Int, GameObject>();
     private Transform tilesContainer; // New parent for all tiles
 
@@ -98,64 +96,4 @@ public class GridManager : MonoBehaviour
         return new Vector3(x * tileSize - offset, 0, y * tileSize - offset);
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = gridGizmoColor;
-
-        if (tiles.Count == 0)
-        {
-            // Try to repopulate tiles from the scene if they're missing
-            RepopulateTilesFromScene();
-        }
-
-        foreach (var tile in tiles)
-        {
-            Vector3 tilePos = tile.Value.transform.position;
-            Vector3 bottomLeft = tilePos - new Vector3(tileSize / 2f, 0, tileSize / 2f);
-            Vector3 bottomRight = tilePos + new Vector3(tileSize / 2f, 0, -tileSize / 2f);
-            Vector3 topLeft = tilePos + new Vector3(-tileSize / 2f, 0, tileSize / 2f);
-            Vector3 topRight = tilePos + new Vector3(tileSize / 2f, 0, tileSize / 2f);
-
-            Gizmos.DrawLine(bottomLeft, bottomRight);
-            Gizmos.DrawLine(bottomRight, topRight);
-            Gizmos.DrawLine(topRight, topLeft);
-            Gizmos.DrawLine(topLeft, bottomLeft);
-        }
-    }
-
-    private void RepopulateTilesFromScene()
-    {
-        // Find the Tiles parent object in the scene
-        Transform tilesParentTransform = tilesParent.Find("Tiles");
-
-        if (tilesParentTransform == null)
-        {
-            Debug.LogWarning("Tiles parent not found in the scene.");
-            return;
-        }
-
-        // Loop through all children of the Tiles parent to populate the tiles dictionary
-        foreach (Transform tileTransform in tilesParentTransform)
-        {
-            // Ensure the tile prefab's name follows the same naming convention
-            Vector2Int gridPos = ParseTilePosition(tileTransform.name);
-
-            if (!tiles.ContainsKey(gridPos))
-            {
-                tiles[gridPos] = tileTransform.gameObject;
-            }
-        }
-    }
-
-    private Vector2Int ParseTilePosition(string tileName)
-    {
-        // Parse the tile's name (Tile_X_Y)
-        string[] parts = tileName.Split('_');
-        if (parts.Length == 3 && int.TryParse(parts[1], out int x) && int.TryParse(parts[2], out int y))
-        {
-            return new Vector2Int(x, y);
-        }
-
-        return Vector2Int.zero; // Default value if the name format is incorrect
-    }
 }
