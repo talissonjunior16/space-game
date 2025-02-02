@@ -1,0 +1,55 @@
+# ========== Unity Generated Files ==========
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
+
+# Ignore Visual Studio generated files
+.vscode/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+
+# Unity cache and logs
+[Uu]ser[Ss]ettings/
+*.pidb.meta
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# Crash reports and dumps
+sysinfo.txt
+
+# Build Artifacts
+*.apk
+*.aab
+*.unitypackage
+
+# Platform-Specific
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*~
+
+# Sensitive files
+Secrets/
+.env
+
+# Plugins caches
+Assets/Plugins/*/bin/
+Assets/Plugins/*/obj/
+
+# Include .unity scene files explicitly
+!Assets/**/*.unity
