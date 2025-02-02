@@ -61,6 +61,7 @@ public class PlacementSystem : MonoBehaviour
 
             preview.UpdatePosition(grid.CellToWorld(gridPosition), placementValidity);
             lastDetectedPosition = gridPosition;
+            SoundManager.Instance.PlayMoveBuildingSound(transform.position);
         }
     }
 
@@ -100,6 +101,8 @@ public class PlacementSystem : MonoBehaviour
 
         buildingData.AddBuildingAt(gridPosition, buildingsDatabase.Buildings[selectedBuildingIndex], placedBuildings.Count - 1);
         preview.UpdatePosition(grid.CellToWorld(gridPosition), false);
+
+        SoundManager.Instance.PlayOnPlaceBuildingSound(transform.position);
     }
 
     private bool CheckPlacementValidity(Vector3Int gridPosition, int selectedBuildingIndex)
