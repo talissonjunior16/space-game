@@ -7,9 +7,6 @@ public class PlacementSystem : MonoBehaviour
     public static PlacementSystem Instance { get; private set; }
 
     [SerializeField]
-    private GameObject mouseIndicator;
-
-    [SerializeField]
     private InputManager inputManager;
     
     [SerializeField]
@@ -48,13 +45,11 @@ public class PlacementSystem : MonoBehaviour
     
     private void Update()
     {
-        if(selectedBuildingIndex < 0) {
+        if(selectedBuildingIndex < 0 || inputManager.IsPointerOverUI()) {
             return;
         }
         
         var (gridPosition, mousePosition) = GetCurrentGridWorldToCellPosition();
-
-        mouseIndicator.transform.position = mousePosition;
 
         if(lastDetectedPosition != gridPosition) {
             bool placementValidity = CheckPlacementValidity(gridPosition, selectedBuildingIndex);
@@ -81,13 +76,13 @@ public class PlacementSystem : MonoBehaviour
         inputManager.OnExit += StopPlacement;
     }
 
-    private void PlaceStructure()
+    public void PlaceStructure()
     {
-        if(inputManager.IsPointerOverUI()) {
+        /*if(inputManager.IsPointerOverUI()) {
             return;
-        }
+        }*/
 
-        var (gridPosition, mousePosition) = GetCurrentGridWorldToCellPosition();
+        var gridPosition = lastDetectedPosition;
 
         bool placementValidity = CheckPlacementValidity(gridPosition, selectedBuildingIndex);
         if(placementValidity == false) {
@@ -103,6 +98,8 @@ public class PlacementSystem : MonoBehaviour
         preview.UpdatePosition(grid.CellToWorld(gridPosition), false);
 
         SoundManager.Instance.PlayOnPlaceBuildingSound(transform.position);
+
+        StopPlacement();
     }
 
     private bool CheckPlacementValidity(Vector3Int gridPosition, int selectedBuildingIndex)

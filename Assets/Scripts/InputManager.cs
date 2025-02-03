@@ -16,17 +16,6 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Alpha1))
-            PlacementSystem.Instance.StartPlacement(1);
-
-        if(Input.GetKeyDown(KeyCode.Alpha2))
-            PlacementSystem.Instance.StartPlacement(2);
-
-        if(Input.GetKeyDown(KeyCode.Alpha3))
-            PlacementSystem.Instance.StartPlacement(3);
-
-        if(Input.GetMouseButtonDown(0))
-            OnClicked?.Invoke();
         if(Input.GetKeyDown(KeyCode.Escape))
             OnExit?.Invoke();
     }

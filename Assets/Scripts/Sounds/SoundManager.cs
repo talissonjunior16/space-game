@@ -17,9 +17,6 @@ public class SoundManager : MonoBehaviour
 
         // Assign the singleton instance
         Instance = this;
-
-        // Optional: Persist this object across scenes
-        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
